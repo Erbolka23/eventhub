@@ -15,13 +15,20 @@
     <nav class="nav-shell">
         <div class="nav-wrapper container">
             <a href="{% url 'events:home' %}" class="brand-logo brand-mark">EventHub</a>
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <ul id="nav-mobile" class="right">
                 <li><a href="{% url 'events:event_list' %}">Все события</a></li>
                 <li><a href="{% url 'events:event_create' %}">Создать событие</a></li>
             </ul>
         </div> 
     </nav>
     <main>
+        {% if messages %}
+            <div class="container" aria-live="polite">
+                {% for message in messages %}
+                    <p class="{{ message.tags }}">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
         {% block content %}{% endblock %}
     </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
