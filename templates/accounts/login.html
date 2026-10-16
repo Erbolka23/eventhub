@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}EventHub | Вход{% endblock %}
+
+{% block content %}
+<section class="page-shell">
+    <div class="container">
+        <div class="page-header">
+            <span class="eyebrow">Аккаунт</span>
+            <h1>Вход в EventHub</h1>
+            <p>Войдите, чтобы создавать и редактировать события.</p>
+        </div>
+        <form method="post" action="{% url 'login' %}" class="event-card auth-card">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="form-errors" role="alert">
+                    {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% for field in form %}
+                <p>
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% for error in field.errors %}
+                        <span class="field-error">{{ error }}</span>
+                    {% endfor %}
+                </p>
+            {% endfor %}
+            <input type="hidden" name="next" value="{{ next }}">
+            <button type="submit" class="btn">Войти</button>
+            <p class="auth-links">
+                Нет аккаунта? <a href="{% url 'signup' %}" class="feature-link">Зарегистрироваться</a>
+                <a href="{% url 'events:event_list' %}" class="feature-link">Каталог событий</a>
+            </p>
+        </form>
+    </div>
+</section>
+{% endblock %}

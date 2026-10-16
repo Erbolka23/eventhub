@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
@@ -21,7 +22,7 @@ class EventListView(ListView):
         return Event.objects.filter(is_deleted=False)
 
 
-class EventCreateView(SuccessMessageMixin, CreateView):
+class EventCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Event
     form_class = EventForm
     template_name = "events/event_form.html"
@@ -31,7 +32,7 @@ class EventCreateView(SuccessMessageMixin, CreateView):
         return reverse("events:event_detail", kwargs={"pk": self.object.pk})
 
 
-class EventUpdateView(SuccessMessageMixin, UpdateView):
+class EventUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Event
     form_class = EventForm
     template_name = "events/event_form.html"
@@ -44,7 +45,7 @@ class EventUpdateView(SuccessMessageMixin, UpdateView):
         return reverse("events:event_detail", kwargs={"pk": self.object.pk})
 
 
-class EventDeleteView(DeleteView):
+class EventDeleteView(LoginRequiredMixin, DeleteView):
     model = Event
     template_name = "events/event_confirm_delete.html"
     success_url = reverse_lazy("events:event_list")

@@ -22,8 +22,10 @@
                         <p class="event-date">{{ event.starts_at|date:"d E Y, H:i" }}</p>
                         <p>{{ event.summary }}</p>
                         <a href="{% url 'events:event_detail' event.pk %}" class="feature-link">Подробнее</a>
-                        <a href="{% url 'events:event_update' event.pk %}" class="feature-link">Редактировать</a>
-                        <a href="{% url 'events:event_delete' event.pk %}" class="feature-link">Удалить</a>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'events:event_update' event.pk %}" class="feature-link">Редактировать</a>
+                            <a href="{% url 'events:event_delete' event.pk %}" class="feature-link">Удалить</a>
+                        {% endif %}
                     </article>
                 </div>
             {% empty %}
