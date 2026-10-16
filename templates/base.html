@@ -18,6 +18,18 @@
             <ul id="nav-mobile" class="right">
                 <li><a href="{% url 'events:event_list' %}">Все события</a></li>
                 <li><a href="{% url 'events:event_create' %}">Создать событие</a></li>
+                {% if user.is_authenticated %}
+                    <li class="nav-user"><span class="nav-username">{{ user.username }}</span></li>
+                    <li>
+                        <form method="post" action="{% url 'logout' %}" class="nav-logout-form">
+                            {% csrf_token %}
+                            <button type="submit" class="nav-logout-button">Logout</button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'signup' %}">Sign up</a></li>
+                {% endif %}
             </ul>
         </div> 
     </nav>

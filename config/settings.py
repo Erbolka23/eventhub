@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'events',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -121,6 +122,13 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
+# Authentication
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'events:event_list'
+LOGOUT_REDIRECT_URL = 'events:home'
 
 
 # Email
